@@ -1,22 +1,26 @@
 {
-  "name": "ytpoop",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
-  "dependencies": {
-    "connect-sqlite3": "^0.9.11",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "ejs": "~2.6.1",
-    "express": "~4.16.1",
-    "express-session": "^1.17.0",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
-    "req-flash": "0.0.3",
-    "sqlite3": "^4.1.1"
-  }
+    "name": "ytpoop",
+    "version": "0.0.0",
+    "description": "A better YouTube recommendation system.",
+    "scripts": {
+        "start": "node ./bin/www"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/oToToT/YTPoop"
+    },
+    "dependencies": {
+        "connect-sqlite3": "^0.9.11",
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "ejs": "~2.6.1",
+        "express": "~4.16.1",
+        "express-session": "^1.17.0",
+        "http-errors": "~1.6.3",
+        "morgan": "~1.9.1",
+        "passport": "^0.4.1",
+        "passport-local": "^1.0.0",
+        "req-flash": "0.0.3",
+        "sqlite3": "^4.1.1"
+    }
 }
