@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title><%= locals.title %></title>
+        <link rel="stylesheet" href="/stylesheets/login_register.css"/>
+        <script src='/javascripts/login_register.js'></script>
+    </head>
+    <body>
+        <div class="form-container">
+            <ul class="tabs">
+                <li
+                    class="<% if (locals.layout === 'login') { %>active<% } %>"
+                    data-bind="login"
+                    data-page="/users/login"
+                    >
+                    Login
+                </li>
+                <li
+                    class="<% if (locals.layout === 'register') { %>active<% } %>"
+                    data-bind="register"
+                    data-page="/users/register">
+                    Register
+                </li>
+            </ul>
+            <div class="form <% if (locals.layout === 'login') { %>active<% } %>" id="login">
+                <% if (locals.layout === "login" && locals.error) { %>
+                <div class="error">Error - <%= error %></div>
+                <% } %>
+                <h1>Login to YTPoop</h1>
+                <form method="POST" action="/users/login">
+                    <div class="input-group">
+                        <label>
+                            Username:
+                            <input type="text" placeholder="Username" name="username"/>
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label>
+                            Password:
+                            <input type="password" placeholder="Password" name="password"/>
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <hr/>
+                    </div>
+                    <div class="input-group">
+                        <input type="submit" value="Login"/>
+                    </div>
+                </form>
+            </div>
+            <div class="form <% if (locals.layout === 'register') { %>active<% } %>" id="register">
+                <% if (locals.layout === "register" && locals.error) { %>
+                <div class="error">Error - <%= error %></div>
+                <% } %>
+                <h1>Register to YTPoop</h1>
+                <form method="POST" action="/users/register">
+                    <div class="input-group">
+                        <label>
+                            Username:
+                            <input type="text" placeholder="Username" name="username"/>
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label>
+                            Password:
+                            <input type="password" placeholder="Password" name="password"/>
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <hr/>
+                    </div>
+                    <div class="input-group">
+                        <input type="submit" value="Register"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

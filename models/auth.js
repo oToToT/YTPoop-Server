@@ -3,7 +3,10 @@ const LocalStrategy = require('passport-local').Strategy;
 const accounts = require('./accounts');
 
 passport.use(new LocalStrategy(function(username, password, done) {
-    accounts.validate(username, password, function(row) {
+    accounts.validate(username, password, function(row, msg) {
+        if (row === false) {
+            return done(null, false, { message: msg });
+        }
         return done(null, row);
     });
 }));

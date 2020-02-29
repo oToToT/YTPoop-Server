@@ -1,0 +1,119 @@
+@font-face {
+	font-family: 'Oxanium';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Oxanium Regular'), local('Oxanium-Regular'), url(https://fonts.gstatic.com/s/oxanium/v1/RrQQboN_4yJ0JmiMe2LE1A.ttf) format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 100;
+	font-display: swap;
+	src: local('Roboto Thin'), local('Roboto-Thin'), url(https://fonts.gstatic.com/s/roboto/v20/KFOkCnqEu92Fr1MmgVxIIzc.ttf) format('truetype');
+}
+* {
+	margin: 0;
+	font-family: "Roboto";
+	font-size: 1rem;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+input:focus {
+	outline: none;
+}
+h1 {
+	font-size: 1.7rem;
+}
+body {
+	background-color: #6f6f6f;
+}
+.form-container {
+	margin: 60px auto;
+	max-width: 600px;
+}
+.form-container ul.tabs {
+	display: flex;
+}
+.form-container ul.tabs li {
+	display: block;
+	flex-grow: 1;
+	text-align: center;
+	background-color: #2a4451;
+	font-family: "Oxanium";
+	cursor: pointer;
+	padding: 15px;
+	color: #7e9aa5;
+	border-top: 5px solid #6f6f6f;
+}
+.form-container ul.tabs li.active {
+	background-color: #7bd1fa;
+	border-top-color: #7bd1fa;
+	color: #ffffff;
+}
+.form-container ul.tabs li:not(.active):hover {
+	transition: 1s;
+	background-color: #6fadcc;
+	color: #ffffff;
+}
+.form-container .form {
+	background-color: #7bd1fa;
+	padding: 15px 40px;
+	color: #ffffff;
+}
+.form-container .form:not(.active) {
+	display: none;
+}
+.form-container .form .error {
+	font-family: "Oxanium";
+	margin: 10px 0px;
+	background-color: #a90800;
+	padding: 15px 20px;
+	color: #eee;
+	pointer-events: none;
+}
+.form-container .form .error::after {
+	content: "🞬";
+	float: right;
+	cursor: pointer;
+	pointer-events: auto;
+}
+.form-container .form form {
+	margin: 15px 0px;
+}
+.form-container .form form .input-group {
+	margin-bottom: 10px;
+	font-size: 1.1rem;
+}
+.form-container .form form .input-group input {
+	font-family: "Oxanium";
+}
+.form-container .form form .input-group input[type="text"],
+.form-container .form form .input-group input[type="password"] {
+	padding: 10px 15px;
+	border: 0;
+	width: 80%;
+	margin: 5px;
+}
+.form-container .form form .input-group input[type="submit"] {
+	cursor: pointer;
+	font-weight: bold;
+	padding: 10px 20px;
+	background-color: #2c80ff;
+	color: #ffffff;
+	border: 0;
+	border-radius: 5px;
+}
+.form-container .form form .input-group input[type="submit"]:hover {
+	transition: 0.8s;
+	background-color: #4ca0ff;
+}
+.form-container .form form .input-group hr {
+	border-style: solid;
+	border-bottom-width: 0px;
+}
