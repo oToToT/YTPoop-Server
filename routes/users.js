@@ -43,20 +43,21 @@ router.post('/login', preventMultipleLogin, passport.authenticate('local', {
 });
 
 router.post('/register', preventMultipleLogin, function(req, res, next) {
+    if (typeof req.body.username !== 'string') {
+        req.flash('error', 'username should be string.')
+        return res.redirect('/users/register');
+    }
     if (!req.body.username) {
         req.flash('error', 'username is required.');
         return res.redirect('/users/register');
     }
-    if (typeof req.body.username !== 'string') {
+
+    if (typeof req.body.password !== 'string') {
         req.flash('error', 'username should be string.')
         return res.redirect('/users/register');
     }
     if (!req.body.password) {
         req.flash('error', 'password is required.');
-        return res.redirect('/users/register');
-    }
-    if (typeof req.body.password !== 'string') {
-        req.flash('error', 'username should be string.')
         return res.redirect('/users/register');
     }
     accounts.register(req.body.username, req.body.password, function(id, msg) {

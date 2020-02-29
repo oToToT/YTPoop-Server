@@ -102,7 +102,6 @@ body {
 }
 .form-container .form form .input-group input[type="submit"] {
 	cursor: pointer;
-	font-weight: bold;
 	padding: 10px 20px;
 	background-color: #2c80ff;
 	color: #ffffff;
