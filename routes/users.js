@@ -31,6 +31,10 @@ router.get('/logout', function(req, res, next) {
     return res.redirect('/');
 });
 
+router.get('/history', function(req, res, next) {
+    return res.render('index', { title: 'History' });
+})
+
 router.post('/login', preventMultipleLogin, passport.authenticate('local', {
     failureRedirect: '/users/login',
     failureFlash: true
@@ -60,7 +64,13 @@ router.post('/register', preventMultipleLogin, function(req, res, next) {
             req.flash('error', msg);
             return res.redirect('/users/register');
         }
-        return res.redirect('/');
+        req.login({
+            username: req.body.username,
+            id: id
+        }, function(err) {
+            if (err) return next(err);
+            return res.redirect('/');
+        });
     });
 });
 
