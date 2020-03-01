@@ -1,15 +1,23 @@
-<header>
-    <a href = "/" style="text-decoration: none;">
-        <img src="/images/icon.png" style="width:6%">
-    </a>
-    <form style="display: inline-block;">
-        <input type="text" placeholder="搜尋" style="width:300%;height:100%">
-        <button style="height:40px;width:50px" type=submit>
-            <i class="fas fa-search"></i>
+<header class="nav">
+	<div class="col-1">
+		<a href="/">
+            <img class="nav-logo" src="/images/icon.png"/>
+        </a>
+    </div>
+	<div class="col-9">
+		<form id="search" action="/search" method="GET">
+			<div class="form-group">
+				<input type="text" placeholder="搜尋" name="search_query"/>
+				<button>
+                    <i class="fas fa-search"></i>
+                </button>
+			</div>
+		</form>
+	</div>
+	<div class="col-2" id="login">
+		<button>
+            <i class="fas fa-sign-in-alt"></i>
+            &nbsp;登入
         </button>
-    </form>
-    <button style="margin-left:220px;height:40px;font-size:130%;border:1px solid DodgerBlue;border-radius:7px">
-        <i class="fas fa-sign-in-alt"></i>
-    </button>
+	</div>
 </header>
-<hr>
