@@ -13,7 +13,7 @@ const passport = require('./models/auth');
 
 // load routers
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const userRouter = require('./routes/user');
 
 const app = express();
 const session_secret = process.env.S_SECRET || 'MinamiKotori_is_the_best.'
@@ -52,7 +52,7 @@ app.use(passport.session());
 // routing
 app.use(express.static(path.join(__dirname, 'assets')));
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
