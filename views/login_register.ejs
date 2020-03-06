@@ -13,13 +13,13 @@
                 <li
                     class="<% if (locals.layout === 'login') { %>active<% } %>"
                     data-bind="login"
-                    data-page="/users/login">
+                    data-page="/user/login">
                     Login
                 </li>
                 <li
                     class="<% if (locals.layout === 'register') { %>active<% } %>"
                     data-bind="register"
-                    data-page="/users/register">
+                    data-page="/user/register">
                     Register
                 </li>
             </ul>
@@ -28,7 +28,7 @@
                 <div class="error">Error - <%= error %></div>
                 <% } %>
                 <h1>Login to YTPoop</h1>
-                <form method="POST" action="/users/login">
+                <form method="POST" action="/user/login">
                     <div class="input-group">
                         <label>
                             Username:
@@ -54,7 +54,7 @@
                 <div class="error">Error - <%= error %></div>
                 <% } %>
                 <h1>Register to YTPoop</h1>
-                <form method="POST" action="/users/register">
+                <form method="POST" action="/user/register">
                     <div class="input-group">
                         <label>
                             Username:

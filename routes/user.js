@@ -36,7 +36,7 @@ router.get('/history', function(req, res, next) {
 })
 
 router.post('/login', preventMultipleLogin, passport.authenticate('local', {
-    failureRedirect: '/users/login',
+    failureRedirect: '/user/login',
     failureFlash: true
 }), function(req, res, next){
     return res.redirect('/');
@@ -45,25 +45,25 @@ router.post('/login', preventMultipleLogin, passport.authenticate('local', {
 router.post('/register', preventMultipleLogin, function(req, res, next) {
     if (typeof req.body.username !== 'string') {
         req.flash('error', 'username should be string.')
-        return res.redirect('/users/register');
+        return res.redirect('/user/register');
     }
     if (!req.body.username) {
         req.flash('error', 'username is required.');
-        return res.redirect('/users/register');
+        return res.redirect('/user/register');
     }
 
     if (typeof req.body.password !== 'string') {
         req.flash('error', 'username should be string.')
-        return res.redirect('/users/register');
+        return res.redirect('/user/register');
     }
     if (!req.body.password) {
         req.flash('error', 'password is required.');
-        return res.redirect('/users/register');
+        return res.redirect('/user/register');
     }
     accounts.register(req.body.username, req.body.password, function(id, msg) {
         if (id === false) {
             req.flash('error', msg);
-            return res.redirect('/users/register');
+            return res.redirect('/user/register');
         }
         req.login({
             username: req.body.username,

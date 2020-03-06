@@ -31,7 +31,7 @@ h1 {
 	font-size: 1.7rem;
 }
 body {
-	background-color: #6f6f6f;
+	background-color: #afafaf;
 }
 .form-container {
 	margin: 60px auto;
@@ -49,7 +49,7 @@ body {
 	cursor: pointer;
 	padding: 15px;
 	color: #7e9aa5;
-	border-top: 5px solid #6f6f6f;
+	border-top: 5px solid #afafaf;
 }
 .form-container ul.tabs li.active {
 	background-color: #7bd1fa;

@@ -1,23 +1,44 @@
 <header class="nav">
 	<div class="col-1">
 		<a href="/">
-            <img class="nav-logo" src="/images/icon.png"/>
-        </a>
-    </div>
+			<img class="nav-logo" src="http://linux13.csie.org:7122/images/icon.png"/>
+		</a>
+	</div>
 	<div class="col-9">
-		<form id="search" action="/search" method="GET">
+		<form id="search" action="#">
 			<div class="form-group">
-				<input type="text" placeholder="搜尋" name="search_query"/>
-				<button>
-                    <i class="fas fa-search"></i>
-                </button>
+				<input type="text" placeholder="搜尋"/>
+				<button><i class="fas fa-search"></i></button>
 			</div>
 		</form>
 	</div>
+	<% if (typeof locals.user === 'undefined') { %>
 	<div class="col-2" id="login">
-		<button>
-            <i class="fas fa-sign-in-alt"></i>
-            &nbsp;登入
-        </button>
+        <div class="relative-container">
+            <a href="/user/login">
+                <div class="btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    &nbsp;登入
+                </div>
+            </a>
+        </div>
 	</div>
+	<% } else { %>
+	<div class="col-2" id="user">
+		<div class="relative-container">
+            <a id="toggle-panel">
+				<div class="btn">
+                    <i class="far fa-user-circle"></i>
+                    &nbsp;<%= locals.user.username -%>
+                </div>
+            </a>
+			<div id="panel" style="display: none;">
+				<ul>
+					<li><a href="/user/history">歷史紀錄</a></li>
+					<li><a href="/user/logout">登出</a></li>
+				</ul>
+			</div>
+		</div> 
+	</div>
+	<% } %>
 </header>
