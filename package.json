@@ -10,6 +10,7 @@
         "url": "https://github.com/oToToT/YTPoop"
     },
     "dependencies": {
+        "@elastic/elasticsearch": "^7.6.0",
         "connect-sqlite3": "^0.9.11",
         "cookie-parser": "~1.4.4",
         "debug": "~2.6.9",
