@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/stylesheets/header.css" />
+    <script src="/javascripts/header.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+	<%- include('header') %>
+    <div style="margin: 20px;">
+        <h3><%= song.singer -%> - <%= song.name -%> (<%= song.date -%>)</h3>
+        <pre><%= song.lyrics.join('\n') -%></pre>
+        <br>
+        <div>
+            當前函數：\(e^{\alpha \cdot a} + b \times \beta + c \times \gamma + d \times \delta\)
+            <br>
+            其中 \(\alpha\)是兩個doc vector的距離，\(\beta\)是兩首歌曲釋出時間的差(單位ms)，\(\gamma\)是一個0或1的值，代表歌手是否相同，\(\delta\)是兩首歌歌名的LCS
+            <br>
+            \(a=\)<input type='text' id='a' value='11.97777'><br>
+            \(b=\)<input type='text' id='b' value='8.333333333333333e-9'><br>
+            \(c=\)<input type='text' id='c' value='-2'><br>
+            \(d=\)<input type='text' id='d' value='-3'><br>
+            前<input type='text' id='K' value=20>首歌<br>
+            <button id='r'>推薦</button>
+        </div>
+        <br>
+        <div>
+            Result:
+            <ul id='res'>
+            </ul>
+        </div>
+    </div>
+    <script>
+        window.onload = ()=>{
+            document.getElementById('r').addEventListener('click', function(){
+                const req = new Request('/reco', {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    body: JSON.stringify({
+                        id: <%= id -%>,
+                        a: document.getElementById('a').value,
+                        b: document.getElementById('b').value,
+                        c: document.getElementById('c').value,
+                        d: document.getElementById('d').value,
+                        K: document.getElementById('K').value
+                    })
+                });
+                fetch(req).then(res=>res.json()).then(function(res){
+                    document.getElementById('res').innerHTML = '';
+                    for (let s of res.result) {
+                        let ul = document.createElement('li');
+                        let aa = document.createElement('a');
+                        aa.href = `/reco?v=${btoa(s.id.toString().padStart(6, "0"))}`;
+                        aa.innerText = `${s.singer} - ${s.name} (${s.date})`;
+                        ul.appendChild(aa);
+                        ul.appendChild(document.createElement('br'));
+                        let txt = document.createTextNode(`weight: ${s.weight}`);
+                        ul.appendChild(txt);
+                        ul.appendChild(document.createElement('br'));
+                        let x = document.createTextNode(`\\(\\alpha=${s.a},\\beta=${s.b},\\gamma=${s.c}, \\delta=${s.d}\\)`);
+                        ul.appendChild(x);
+                        document.getElementById('res').appendChild(ul);
+                    }
+                    MathJax.typesetPromise().catch((err) => console.log(err.message));
+                })
+            })
+        }
+    </script>
+</body>
+</html>

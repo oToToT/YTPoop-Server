@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/stylesheets/header.css" />
+    <script src="/javascripts/header.js"></script>
+</head>
+<body>
+	<%- include('header') %>
+    <div style="margin: 20px;">
+        <ul>
+            <% for (let s of result) { %>
+                <li>
+                    <a href='/reco?v=<%= Buffer.from(s._id.toString().padStart(6, "0")).toString("base64") -%>'>
+                    <%= s._source.singer -%> - <%= s._source.name -%> (<%= s._source.date -%>)
+                    </a>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+</body>
+</html>
