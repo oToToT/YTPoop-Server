@@ -87,6 +87,7 @@ header.nav {
 	align-items: center;
 	text-align: center;
 	padding: 0px 10px;
+    z-index: 9999;
 }
 header.nav > div {
 	padding: 10px 0px;

@@ -7,7 +7,7 @@
 	<div class="col-9">
 		<form id="search" action="/results" method="GET">
 			<div class="form-group">
-				<input type="text" placeholder="搜尋" name="q"/>
+                <input type="text" placeholder="搜尋" name="q" value="<%= (typeof locals.search === 'undefined') ? '' : locals.search -%>"/>
 				<button><i class="fas fa-search"></i></button>
 			</div>
 		</form>

@@ -32,6 +32,7 @@ body {
 #yt_view iframe {
     height: calc(65vw * 0.5625);
     width: 100%;
+    border: 0;
 }
 #title {
     font-size: 1.2rem;
