@@ -1,56 +1,38 @@
 <!DOCTYPE html>
-<html lang="zh" style="height: 100%">
-<head>
-	<meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-	<link rel="stylesheet" href="/stylesheets/header.css" />
-    <script src="/javascripts/header.js"></script>
-    <style>
-		* {
-			font-family:Roboto, Arial, sans-serif;
-		}
-		.yt_link:link, .yt_link:visited, .yt_link:hover, .yt_link:active {
-			color:black;
-			background-color: transparent;
-  			text-decoration: none;
-		}
-		.yt_des {
-			font-size: 14px;
-			width: 100%;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			display: -webkit-box;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
-		}
-	</style>
-</head>
-
-<body style="height: 100%">
-	<%- include('header') %>	
-	<div style="width:70%;height:100%;display:inline-block">
-		<iframe width=97% height=70% src="https://www.youtube.com/embed/gwMa6gpoE9I?rel=0&autoplay=1" frameborder="0" allowfullscreen=""></iframe>
-		<p style="font-size:18px">BTS (방탄소년단) 'ON' Kinetic Manifesto Film : Come Prima</p>
-		<hr>
-	</div>
-	<div style="width:25%;display:inline-block;position:absolute;top:12%;">
-		<div>
-			<div style="display:inline-block;width:55%">
-				<a title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" class="yt_link">
-					<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width:100%">
-				</a>
+<html lang="zh">
+	<head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/stylesheets/header.css" />
+        <link rel="stylesheet" href="/stylesheets/play.css" />
+        <script src="/javascripts/header.js"></script>
+	</head>
+	<body>
+        <%- include('header') %>
+        <div id="main">
+			<div id="yt_view">
+				<iframe src="https://www.youtube.com/embed/ctfEmKL8beE?autoplay=1"></iframe>
+				<div id="title">Aqoursメンバーの物真似をする 斉藤朱夏、高槻かなこ、小林愛香</div>
+				<pre id="lyrics">abc def ggg</pre>
 			</div>
-			<div style="display:inline-block;width:40%">
-				<div style="width:50%;margin-right:0%;padding-right:0;position:absolute;top:0%">
-					<a title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" class="yt_link">
-							<p class="yt_des">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
-					</a>
+			<div id="sidebar">
+				<div class="recommend">
+					<div>
+                        <a class="yt_link" href="#">
+                            <img class="thumbnail" src="https://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg"/>
+                        </a>
+                    </div>
+					<div class="sideinfo">
+                        <a class="yt_link yt_des" href="#">
+                            孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video
+                        </a>
+                        <a class="yt_link yt_des singer" href="#">
+                            Aqours
+                        </a>
+                    </div>
 				</div>
 			</div>
 		</div>
-
-	</div>
-</body>
-
+	</body>
 </html>
