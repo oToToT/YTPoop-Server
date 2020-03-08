@@ -12,9 +12,10 @@
         <%- include('header') %>
         <div id="main">
 			<div id="yt_view">
-				<iframe src="https://www.youtube.com/embed/ctfEmKL8beE?autoplay=1"></iframe>
-				<div id="title">Aqoursメンバーの物真似をする 斉藤朱夏、高槻かなこ、小林愛香</div>
-				<pre id="lyrics">abc def ggg</pre>
+                <iframe src="https://www.youtube.com/embed/?autoplay=1&loop=1&rel=0&listType=search&list=<%= encodeURIComponent(song.singer+' '+song.name) -%>"></iframe>
+				<div id="title"><%= song.singer -%> - <%= song.name -%></div>
+                <div id="date"><%= song.date -%></div>
+                <pre id="lyrics"><%= song.lyrics.join('\n') -%></pre>
 			</div>
 			<div id="sidebar">
 				<div class="recommend">

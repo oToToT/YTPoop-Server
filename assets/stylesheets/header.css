@@ -80,21 +80,21 @@ button:focus,
 	display: flex;
 }
 header.nav {
+	background: #fff;
+	position: fixed;
+	width: 100vw;
 	display: flex;
 	align-items: center;
 	text-align: center;
-	border-bottom-color: rgba(0, 0, 0, 0.3);
-	border-bottom-style: solid;
-	border-bottom-width: 1px;
 	padding: 0px 10px;
 }
-header.nav div {
+header.nav > div {
 	padding: 10px 0px;
 }
 header.nav .nav-logo {
 	width: 100px;
 }
-@media (max-width: 520px) {
+@media screen and (max-width: 520px) {
 	header.nav .nav-logo {
 		width: 70px;
 	}
@@ -116,7 +116,7 @@ header.nav .nav-logo {
 #user .btn:hover {
 	background-color: #eee;
 }
-@media (max-width: 520px) {
+@media screen and (max-width: 520px) {
 	#login .btn,
 	#user .btn {
 		padding: 8px 10px;
@@ -148,3 +148,12 @@ header.nav .nav-logo {
 	text-decoration: none;
 	color: black;
 }
+.nav.placehold {
+	height: 60px;
+}
+@media screen and (max-width: 520px) {
+	.nav.placehold {
+		height: 50px;
+	}
+}
+
