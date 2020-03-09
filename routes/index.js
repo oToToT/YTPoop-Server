@@ -1,46 +1,78 @@
 const express = require('express');
 const router = express.Router();
 const songs = require('../models/songs');
+const accounts = require('../models/accounts');
+const histories = require('../models/histories')
 
-router.get('/', function(req, res, next) {
+function ensureParam(key) {
+    return (req, res, next)=>{
+        if (typeof req.query[key] === 'undefined') {
+            return res.redirect("/");
+        }
+        return next();
+    };
+}
+
+router.get("/", function(req, res, next) {
     return res.render('index', {
         user: req.user,
         songs: songs.randomSample(50)
     });
 });
 
-router.get('/watch', function(req, res, next) {
-    if (typeof req.query.v === 'undefined') {
-        return res.redirect('/');
-    }
-    let id = 0;
-    try {
-        id = Buffer.from(req.query.v, 'base64').toString('ascii');
-        id = Number(id);
-        if (isNaN(id)) {
-            throw "Bad id.";
+function extractVid(param) {
+    return (req, res, next) => {
+        let id = 0;
+        try {
+            id = Buffer.from(req.query[param], 'base64').toString('ascii');
+            id = Number(id);
+            if (isNaN(id)) {
+                throw "Bad id.";
+            }    
+        } catch(e) {
+            return res.redirect('/');
         }
-        return res.render('watch', {
-            user: req.user,
-            song: songs.getSongById(id),
-            recommend: songs.getRecommend(id, 11.97777, 8.333333333333333e-9, -2, -3, 20)
-        });
-    } catch(e) {
-        return res.redirect('/');
+        req.sid = id;
+        return next();
     }
-});
+}
 
-router.get('/search', async function(req, res, next) {
-    if (typeof req.query.q === 'undefined') {
-        return res.redirect('/');
-    }
+router.get("/watch",
+    ensureParam("v"),
+    extractVid("v"),
+    function(req, res, next) {
+        let song = null;
+        try {
+            song = songs.getSongById(req.sid);
+        } catch(e) {
+            return res.redirect("/");
+        }
+        const renderPage = ()=>{
+            return res.render('watch', {
+                user: req.user,
+                song: song,
+                recommend: songs.getRecommend(req.sid, 11.97777, 8.333333333333333e-9, -2, -3, 20)
+            });
+        }
+        if (req.user) {
+            histories.save(req.user.id, req.sid, (lastID, msg)=>{
+                if (lastID === false) throw msg;
+                renderPage();
+            });
+        } else {
+            renderPage();
+        }
+   }
+);
+
+router.get("/search", ensureParam("q"), async function(req, res, next) {
     return res.render('search', {
         user: req.user,
         search: req.query.q
     });
 });
 
-router.get('/results', async function(req, res, next) {
+router.get("/results", async function(req, res, next) {
     let result = await songs.search(req.query.q, limits=100);
     return res.render('result', {
         user: req.user,
@@ -49,7 +81,7 @@ router.get('/results', async function(req, res, next) {
     });
 });
 
-router.get('/reco', function(req, res, next) {
+router.get("/reco", ensureParam("v"), function(req, res, next) {
     let id = Buffer.from(req.query.v, 'base64').toString('ascii');
     id = Number(id);
     return res.render('reco', {
@@ -58,7 +90,7 @@ router.get('/reco', function(req, res, next) {
     });
 });
 
-router.post('/reco', function(req, res, next) {
+router.post("/reco", function(req, res, next) {
     let id = Number(req.body.id);
     let a = Number(req.body.a);
     let b = Number(req.body.b);

@@ -11,7 +11,7 @@ db.serialize(function(){
            "salt" TEXT -- salt that is appended to the password before it is hashed
        )`
     );
-});
+    });
 
 function hashPassword(password, salt) {
     let hash = crypto.createHash('sha256');
@@ -46,7 +46,7 @@ function register(username, password, cb) {
         db.run('INSERT INTO users (username, password, salt) VALUES (?, ?, ?)',
             username, hash, salt,
             function(err) {
-               if (err) return cb(false, 'Unknown error occurred.');
+               if (err) return cb(false, err);
                return cb(this.lastID);
             }
         );

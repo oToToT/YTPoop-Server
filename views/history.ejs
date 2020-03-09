@@ -13,8 +13,9 @@
         <ul>
             <% for (let s of result) { %>
                 <li>
-                    <a href='/reco?v=<%= Buffer.from(s._id.toString().padStart(6, "0")).toString("base64") -%>'>
-                    <%= s._source.singer -%> - <%= s._source.name -%> (<%= s._source.date -%>)
+                    <%= (new Date(s.timestamp)).toGMTString() -%>: 
+                    <a href='/watch?v=<%= Buffer.from(s.sid.toString().padStart(6, "0")).toString("base64") -%>'>
+                    <%= s.singer -%> - <%= s.name -%> (<%= s.date -%>)
                     </a>
                 </li>
             <% } %>
