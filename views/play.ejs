@@ -24,32 +24,75 @@
 			-webkit-line-clamp: 2;
 			-webkit-box-orient: vertical;
 		}
+		.all_block {
+			display: flex;
+			height: 100%;
+		}
+		.video_block {
+			display: flex;
+			width: 65%;
+			height: 100%;
+		}
+		.list_block {
+			width: 32%;
+			display: flex;
+			flex-direction: column;
+		}
+		.vt_block {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justity-content: flex-start;
+		}
+		.pic_block {
+			width: 50%;
+			display: flex;
+		}
+		.name_block {
+			width: 47%;
+			display: flex;
+			flex-direction: column;
+		}
 	</style>
 </head>
 
 <body style="height: 100%">
-	<%- include('header') %>	
-	<div style="width:70%;height:100%;display:inline-block">
-		<iframe width=97% height=70% src="https://www.youtube.com/embed/gwMa6gpoE9I?rel=0&autoplay=1" frameborder="0" allowfullscreen=""></iframe>
-		<p style="font-size:18px">BTS (방탄소년단) 'ON' Kinetic Manifesto Film : Come Prima</p>
-		<hr>
-	</div>
-	<div style="width:25%;display:inline-block;position:absolute;top:12%;">
-		<div>
-			<div style="display:inline-block;width:55%">
-				<a title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" class="yt_link">
-					<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width:100%">
-				</a>
-			</div>
-			<div style="display:inline-block;width:40%">
-				<div style="width:50%;margin-right:0%;padding-right:0;position:absolute;top:0%">
-					<a title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" class="yt_link">
-							<p class="yt_des">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
+	<%- include('header') %>
+	<div class="all_block">
+		<div class="video_block">
+			<iframe width="97%" height="70%" src="https://www.youtube.com/embed/gwMa6gpoE9I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+		
+		<div class="list_block">
+			<div class="vt_block">
+				<div class="pic_block">
+					<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4">
+						<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
 					</a>
+				</div>
+
+				<div class="name_block">
+					<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" class="yt_link">
+						<p class="yt_des">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
+					</a>
+					<p>I do that</p>
+				</div>
+			</div>
+			<div class="vt_block">
+				<div class="pic_block">
+					<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4">
+						<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
+					</a>
+				</div>
+
+				<div class="name_block">
+					<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" class="yt_link">
+						<p class="yt_des">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
+					</a>
+					<p class="yt_des">I do that</p>
 				</div>
 			</div>
 		</div>
-
 	</div>
 </body>
 
