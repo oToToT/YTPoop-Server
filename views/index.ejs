@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
     <head>
-        <title><%= title %></title>
-        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/stylesheets/index.css" />
+        <link rel="stylesheet" href="/stylesheets/header.css" />
+        <script src="/javascripts/header.js"></script>
+        <style>
+        </style>
+        <title>YTPoop</title>
     </head>
     <body>
-        <h1><%= title %></h1>
-        <p>Welcome to <%= title %></p>
+        <%- include('header') %>
+        <div class="container">
+            <% for (let s of songs) { %>
+            <div class="yt_box">
+                <a href="/watch?v=<%= Buffer.from(s.id.toString().padStart(6, '0')).toString('base64') -%>" class="yt_link">
+                    <!--<img class="thumbnail" src="https://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg"/>-->
+                    <iframe class="thumbnail" src="https://www.youtube.com/embed/?autoplay=1&loop=1&rel=0&listType=search&list=<%= encodeURIComponent(s.singer+' '+s.name) -%>" style="pointer-events: none;"></iframe>
+
+                    <p class="title" title="<%= s.singer -%> - <%= s.name -%> (<%= s.date -%>)"><%= s.singer -%> - <%= s.name -%> (<%= s.date -%>)</p>
+                </a>
+            </div>
+            <% } %>
+        </div>
     </body>
 </html>

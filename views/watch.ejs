@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/stylesheets/header.css" />
+        <link rel="stylesheet" href="/stylesheets/watch.css" />
+        <script src="/javascripts/header.js"></script>
+        <title>YTPoop - <%= song.singer -%> [<%= song.name -%>] (<%= song.date -%>)</title>
+    </head>
+    <body>
+        <%- include('header') %>
+        <div id="main">
+            <div id="yt_view">
+                <iframe src="https://www.youtube.com/embed/?autoplay=1&loop=1&rel=0&listType=search&list=<%= encodeURIComponent(song.singer+' '+song.name) -%>" allow="fullscreen"></iframe>
+                <div id="title"><%= song.singer -%> - <%= song.name -%></div>
+                <div id="date"><%= song.date -%></div>
+                <pre id="lyrics"><%= song.lyrics.join('\n') -%></pre>
+            </div>
+            <div id="sidebar">
+                <% for (let r of recommend) { %>
+                <div class="recommend">
+                    <div>
+                        <a class="yt_link" href="/watch?v=<%= Buffer.from(r.id.toString().padStart(6, '0')).toString('base64') -%>" title="<%= r.singer -%> - <%= r.name -%>">
+                            <!--<img class="thumbnail" src="https://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg"/>-->
+                            <div class="thumbnail" style="position: absolute;"></div>
+                            <iframe class="thumbnail" src="https://www.youtube.com/embed/?autoplay=1&loop=1&rel=0&listType=search&list=<%= encodeURIComponent(r.singer+' '+r.name) -%>"></iframe>
+                        </a>
+                    </div>
+                    <div class="sideinfo">
+                        <a class="yt_link yt_des" href="/watch?v=<%= Buffer.from(r.id.toString().padStart(6, '0')).toString('base64') -%>" title="<%= r.singer -%> - <%= r.name -%>">
+                            <%= r.singer -%> - <%= r.name -%>
+                        </a>
+                        <a class="yt_link yt_des date" href="/results?q=<%= r.date -%>">
+                            <%= r.date -%>
+                        </a>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+* {
+    font-family: Arial, sans-serif;
+}
+body {
+    background: #f8f8f8;
+}
+.yt_box{
+    width:17%;
+    height:17%;
+    display:inline-block;
+    margin-bottom: 15px;
+}
+.yt_link,
+.yt_link:visited,
+.yt_link:active {
+    color: black; 
+    text-decoration: none;
+}
+.container {
+    margin: 30px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.thumbnail {
+    width: 100%;
+    border: 0;
+}
+.title {
+    text-align: center;
+}

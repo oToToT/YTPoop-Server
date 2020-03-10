@@ -19,7 +19,7 @@ async function search(query, limits=30, from=0) {
             query: {
                 multi_match : {
                     query: query,
-                    fields: [ "name^5", "singer^6", "lyrics^4", "*" ],
+                    fields: [ "name^6", "singer^10", "lyrics^2", "*" ],
                 }
             }
         }
@@ -57,15 +57,15 @@ function lcs(s1, s2) {
     return ans;
 }
 
-function getRecommend(id, a, b, c, d, e, K = 20) {
+function getRecommend(id, a, b, c, d, K = 20) {
     const calcWeight = (dv, dt, ds, dn)=>{
-        return a*Math.exp(dv * b) + c*dt + d*ds + e*dn;
+        return Math.exp(dv * a) + b*dt + c*ds + d*dn;
     };
     const pairWeight = (s1, s2)=>{
+        const dv = vecdis(s1.vecvalue, s2.vecvalue)
         const d1 = new Date(s1.date);
         const d2 = new Date(s2.date);
         const dt = Math.abs(d1 - d2);
-        const dv = vecdis(s1.vecvalue, s2.vecvalue)
         const ds = Number(s1.singer == s2.singer);
         const dn = lcs(s1.name, s2.name);
         return calcWeight(dv, dt, ds, dn);
@@ -86,8 +86,8 @@ function getRecommend(id, a, b, c, d, e, K = 20) {
         s.id = i;
         /* might not need information below */
         s.weight = weights[i];
-        s.a = Math.abs((new Date(songs[i].date)) - (new Date(songs[id].date)));
-        s.b = vecdis(songs[i].vecvalue, songs[id].vecvalue);
+        s.a = vecdis(songs[i].vecvalue, songs[id].vecvalue);
+        s.b = Math.abs((new Date(songs[i].date)) - (new Date(songs[id].date)));
         s.c = Number(songs[i].singer == songs[id].singer);
         s.d = lcs(songs[i].name, songs[id].name);
         rec.push(s);
@@ -96,11 +96,40 @@ function getRecommend(id, a, b, c, d, e, K = 20) {
 }
 
 function getSongById(id) {
+    if (typeof id !== 'number') {
+        throw "id should be a number.";
+    }
+    if (id >= songs.length) {
+        throw "index out of range.";
+    }
     return songs[id];
+}
+
+/* Initialize */
+let SHUFFLED = new Uint32Array(songs.length);
+for (let i = 0; i < songs.length; i++) {
+    SHUFFLED[i] = i;
+}
+
+function randomSample(limit = 1) {
+    if (limit > SHUFFLED.length) {
+        throw "Too many required sample.";
+    }
+    let ret = [];
+    for (let i = SHUFFLED.length - 1; i >= SHUFFLED.length - limit; --i) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [SHUFFLED[i], SHUFFLED[j]] = [SHUFFLED[j], SHUFFLED[i]];
+        let copied = Object.assign({}, songs[SHUFFLED[i]]);
+        delete copied.vecvalue;
+        copied.id = SHUFFLED[i];
+        ret.push(copied);
+    }
+    return ret;
 }
 
 module.exports = {
     search: search,
     getRecommend: getRecommend,
-    getSongById: getSongById
+    getSongById: getSongById,
+    randomSample: randomSample
 };
