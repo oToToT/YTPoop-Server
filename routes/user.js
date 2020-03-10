@@ -1,5 +1,7 @@
+const histories = require('../models/histories')
 const passport = require('../models/auth')
 const accounts = require('../models/accounts')
+const songs = require('../models/songs')
 const express = require('express');
 const router = express.Router();
 
@@ -28,11 +30,17 @@ router.get('/register', preventMultipleLogin, function(req, res, next) {
 
 router.get('/logout', function(req, res, next) {
     req.logout();
-    return res.redirect('/');
+    return res.redirect(req.headers["referer"] || "/");
 });
 
 router.get('/history', function(req, res, next) {
-    return res.render('index', { title: 'History' });
+    histories.get(req.user.id, (rows, err)=>{
+        if (rows === false) throw err;
+        return res.render('history', {
+            user: req.user,
+            result: rows.map(row=>Object.assign(row, songs.getSongById(row.sid)))
+        });
+    });
 })
 
 router.post('/login', preventMultipleLogin, passport.authenticate('local', {
