@@ -1,204 +1,76 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-	<meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="/stylesheets/header.css" />
-    <script src="/javascripts/header.js"></script>
-	<script src="/javascripts/results.js"></script>
-	<style>
-		html {
-  box-sizing: border-box;
-  height: 100%;
-}
-
-*, *::before, *::after {
-  box-sizing: inherit;
-}
-
-.button_block {
-  display: -webkit-box;
-  display: flex;
-	margin-left: 3%;
-  -webkit-box-pack: center;
-          justify-content: center;
-  color: #0f273d;
-  font-family: 'Lato', sans-serif;
-}
-
-h3 {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.swappy-radios label {
-  display: block;
-  position: relative;
-  padding-left: 4rem;
-  margin-bottom: 1.5rem;
-  cursor: pointer;
-  font-size: 1.2rem;
-	width: 10rem;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  color: #555;
-}
-.swappy-radios label:hover input ~ .radio {
-  opacity: 0.8;
-}
-.swappy-radios input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-.swappy-radios input:checked ~ span {
-  color: #0bae72;
-  -webkit-transition: color .5s;
-  transition: color .5s;
-}
-.swappy-radios input:checked ~ .radio {
-  background-color: #0ac07d;
-  opacity: 1 !important;
-}
-.swappy-radios input:checked ~ .radio::after {
-  opacity: 1;
-}
-.swappy-radios .radio {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 1.8rem;
-  width: 1.8rem;
-  background: #c9ded6;
-  border-radius: 50%;
-}
-.swappy-radios .radio::after {
-  display: block;
-  content: '';
-  position: absolute;
-  opacity: 0;
-  top: .5rem;
-  left: .5rem;
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 50%;
-  background: #fff;
-}
-
-
-
-		* {
-			font-family:Roboto, Arial, sans-serif;
-		}
-		.yt_link:link, .yt_link:visited, .yt_link:hover, .yt_link:active {
-			color:black;
-			background-color: transparent;
-  			text-decoration: none;
-		}
-		.yt_des {
-			word-break: break-all;
-            overflow : hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-		}
-		.main_block {
-			display: flex;
-			flex-direction: column;
-		}
-		.ret_block {
-			display: flex;
-			flex-direction: row;
-		}
-		.img_block {
-			display: flex;
-			width: 20%;
-		}
-		.info_block {
-			display: flex;
-			width: 50%;
-			flex-direction: column;
-			padding-left: 1%;
-		}
-		body {
-			background: #f8f8f8;
-		}
-	</style>
-</head>
-
-<body>
-	<%- include('header') %>
-	<br>
-	
-
-
-
-	
-	<div class="main_block">
-		<div style="display: flex; flex-direction: row;">
-			<div class="button_block">
-				<div class="swappy-radios" role="radiogroup" aria-labelledby="swappy-radios-label">
-				  <h3 id="swappy-radios-label">Search Option</h3>
-				  <br>
-				  <label>
-					<input type="radio" name="options" checked/>
-					<span class="radio"></span>
-					<span>不指定</span>
-				  </label>
-				  <label>
-					<input type="radio" name="options" />
-					<span class="radio"></span>
-					<span>找標題</span>
-				  </label>
-				  <label>
-					<input type="radio" name="options" />
-					<span class="radio"></span>
-					<span>找作者</span>
-				  </label>
-				  <label>
-					<input type="radio" name="options" />
-					<span class="radio"></span>
-					<span>找歌詞</span>
-				  </label>
-				</div>
-			</div>
-
-			<div style="display: flex; flex-direction: column; margin-left: 2%;">
-				<% for (let s of result) { %>
-				<div class="ret_block">
-					<div class="img_block">
-						<a href="/watch?v=<%= Buffer.from(s._id.toString().padStart(6, '0')).toString('base64') -%>">
-							<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
-						</a>
-					</div>
-
-					<div class="info_block">
-						<div>
-							<a href="/watch?v=<%= Buffer.from(s._id.toString().padStart(6, '0')).toString('base64') -%>" title="<%= s._source.singer -%> - <%= s._source.name -%> (<%= s._source.date -%>)" class="yt_link">
-								<p class="yt_des" style="font-size: 18px;"><%= s._source.singer -%> - <%= s._source.name -%> (<%= s._source.date -%>)</p>
-							</a>
-						</div>
-						<div>
-							<pi style="font-size: 13px;"><%= s._source.singer -%> </p>
-						</div>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/stylesheets/header.css" />
+        <link rel="stylesheet" href="/stylesheets/results.css" />
+        <script src="/javascripts/header.js"></script>
+        <script src="/javascripts/results.js"></script>
+        <title><%= locals.search  -%>- YTPoop</title>
+    </head>
+    <body>
+        <%- include('header') %>
+        <div class="main">
+            <div class="flex-container">
+                <div class="button_block">
+                    <div class="swappy-radios" role="radiogroup" aria-labelledby="swappy-radios-label">
+                        <h3 id="swappy-radios-label">Search Option</h3>
                         <br>
-						<div>
-							<p style="font-size: 13px;" class="yt_des">	<%= s._source.lyrics.join(" ") -%> </p>
-						</div>
-					</div>
-				</div>
-				<% } %>
-			</div>
-		</div>
-	</div>
+                        <label>
+                            <input type="radio" name="options" checked/>
+                            <span class="radio"></span>
+                            <span>不指定</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="options" />
+                            <span class="radio"></span>
+                            <span>找標題</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="options" />
+                            <span class="radio"></span>
+                            <span>找作者</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="options" />
+                            <span class="radio"></span>
+                            <span>找歌詞</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="result">
+                    <% for (let s of result) { %>
+                    <div class="ret_block">
+                        <div class="img_block">
+                            <a href="/watch?v=<%= Buffer.from(s._id.toString().padStart(6, '0')).toString('base64') -%>">
+                                <img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
+                            </a>
+                        </div>
+
+                        <div class="info_block">
+                            <div>
+                                <a href="/watch?v=<%= Buffer.from(s._id.toString().padStart(6, '0')).toString('base64') -%>" title="<%= s._source.singer -%> - <%= s._source.name -%> (<%= s._source.date -%>)" class="yt_link">
+                                    <p class="yt_des title"><%= s._source.singer -%> - <%= s._source.name -%> (<%= s._source.date -%>)</p>
+                                </a>
+                            </div>
+                            <div>
+                                <p class="singer"><%= s._source.singer -%> </p>
+                            </div>
+                            <br>
+                            <div>
+                                <p class="yt_des lyrics"><%= s._source.lyrics.join(" ") -%></p>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
 
 
-</body>
+    </body>
 
 </html>
