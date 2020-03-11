@@ -77,13 +77,36 @@ function getRecommend(id, a, b, c, d, K = 20) {
         const [dv, dt, ds, dn] = pairWeight(songs[id], songs[i]);
         weights[i] = calcWeight(dv, dt, ds, dn);
         if (i == id) continue;
+        
+        let updV = false;
+        if (!updV) updV = (bestV.length == 0);
+        if (!updV) updV = (dv < bestV[0]);
+        if (!updV) updV = (dv == bestV[0] && weights[i] < weights[bestV[1]]);
+        if (updV) bestV = [dv, i];
+
+        let updT = false;
+        if (!updT) updT = (bestT.length == 0);
+        if (!updT) updT = (dt < bestT[0]);
+        if (!updT) updT = (dt == bestT[0] && weights[i] < weights[bestT[1]]);
+        if (updT) bestT = [dt, i];
+
+        let updS = false;
+        if (!updS) updS = (bestS.length == 0);
+        if (!updS) updS = (ds > bestS[0]);
+        if (!updS) updS = (ds == bestS[0] && weights[i] < weights[bestS[1]]);
+        if (updS) bestS = [ds, i];
+
+        let updN = false;
+        if (!updN) updN = (bestN.length == 0);
+        if (!updN) updN = (dn > bestN[0]);
+        if (!updN) updN = (dn == bestN[0] && weights[i] < weights[bestN[1]]);
+        if (updN) bestN = [dn, i];
+
     }
 
-    let heap = new Heapify(songs.length, INDICES, weights, Uint32Array, Float64Array);
+
     let rec = [];
-    while (rec.length < K) {
-        let i = heap.pop();
-        if (i == id) continue;
+    const addToRec = (i) => {
         let s = Object.assign({}, songs[i]);
         delete s.vecvalue;
         s.id = i;
@@ -94,6 +117,31 @@ function getRecommend(id, a, b, c, d, K = 20) {
         s.c = Number(songs[i].singer == songs[id].singer);
         s.d = lcs(songs[i].name, songs[id].name);
         rec.push(s);
+    }
+
+    let already = [];
+    if (Math.random() > 0.7 && rec.length < K) {
+        addToRec(bestV[1]);
+        already.push(bestV[1]);
+    }
+    if (Math.random() > 0.8 && rec.length < K) {
+        addToRec(bestT[1]);
+        already.push(bestT[1]);
+    }
+    if (Math.random() > 0.7 && rec.length < K) {
+        addToRec(bestS[1]);
+        already.push(bestS[1]);
+    }
+    if (Math.random() > 0.7 && rec.length < K) {
+        addToRec(bestN[1]);
+        already.push(bestN[1]);
+    }
+
+    let heap = new Heapify(songs.length, INDICES, weights, Uint32Array, Float64Array);
+    while (rec.length < K) {
+        let i = heap.pop();
+        if (i == id || already.includes(i)) continue;
+        addToRec(i);
     }
     return rec;
 }
