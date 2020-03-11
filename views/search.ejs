@@ -191,29 +191,32 @@ h3 {
 						</div>
 					</div>
 				</div>
+
+				<% for (let s of result) { %>
 				<div class="ret_block">
 					<div class="img_block">
-						<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4">
+						<a href="/watch?v=<%= Buffer.from(s.id.toString().padStart(6, '0')).toString('base64') -%>">
 							<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
 						</a>
 					</div>
 
 					<div class="info_block">
 						<div>
-							<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" class="yt_link">
-								<p class="yt_des" style="font-size: 18px;">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
+							<a href="/watch?v=<%= Buffer.from(s.id.toString().padStart(6, '0')).toString('base64') -%>" title="<%= s.singer -%> - <%= s.name -%> (<%= s.date -%>)" class="yt_link">
+								<p class="yt_des" style="font-size: 18px;"><%= s.singer -%> - <%= s.name -%> (<%= s.date -%>)</p>
 							</a>
 						</div>
 
 						<div>
-							<pi style="font-size: 13px;">I do that</p>
+							<pi style="font-size: 13px;"><%= s.singer -%> </p>
 						</div>
 
 						<div>
-							<p style="font-size: 13px;" class="yt_des">jewfhkwjhfkhwrfurhuireuhguirheguihreigirheighirehgiurheuigurehgiurehgiiiiiiiiiiiiiihguirehgirehiuvreuvguerhviuhrieuhvierihgiurehgiuhreiguhiuregurhiurehgiureewfhjkwrfhkjwhefkjhekwfhkehrwkfhwefhjwnfkjwnrbfkjenrwkfrekgferbgjkrbekjgjkrebgjkbrekgberbgejkrbgejkrbgjkerbgejkqrbgjker</p>
+							<p style="font-size: 13px;" class="yt_des">	<%= s.lyrics.join(" ") -%> </p>
 						</div>
 					</div>
 				</div>
+				<% } %>
 			</div>
 		</div>
 	</div>
