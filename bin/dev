@@ -26,8 +26,27 @@ router.get("/watch", function(req, res, next) {
         "recommend": []
     });
 });
-router.get("/search", function(req, res, next) {
-    return res.render('search');
+router.get("/results", function(req, res, next) {
+    return res.render('results', {
+		result: [{
+			_id: 1,
+			_source: {
+				name: "haha",
+				singer: "haha",
+				lyrics: ["ourevjekrnvkberthnbjkhethbjkrhejkbhrkebkrehbjkherjkhjbkerjkrbhjkro","meoeldfjkewrnhvkjnerwknvkwerakjvkwjnrjkvrenjkvnejkrnvjkernvkfvhejkrhkvjehrnjkhnejrknvkjnerkjnbkvkrejnkjberjbnkjbnkjetnrbjkenrjkbkjerkjrkjbvjkcwhrifuwg3wwwwwwwwwwwbehjkrnwlrhuihgekrhvberhjerkjvejkrnvkjernvjw"],
+				date: "2020-09-87"
+			}
+		},
+		{
+			_id: 87,
+			_source: {
+				"singer": "Aqours",
+				"name": "〜Next SPARKLING!!〜 Blu-ray & DVD",
+				"date": "2020-08-07",
+				"lyrics": ["hi"]
+			}
+        }]
+	});
 });
 
 const app = express();
