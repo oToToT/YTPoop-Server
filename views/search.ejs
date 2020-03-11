@@ -6,7 +6,95 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
     <link rel="stylesheet" href="/stylesheets/header.css" />
     <script src="/javascripts/header.js"></script>
+	<script src="/javascripts/search.js"></script>
 	<style>
+		html {
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 10px;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.button_block {
+  display: -webkit-box;
+  display: flex;
+	margin-left: 3%;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  min-height: 20vh;
+  color: #0f273d;
+  font-family: 'Lato', sans-serif;
+}
+
+h3 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.swappy-radios label {
+  display: block;
+  position: relative;
+  padding-left: 4rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  font-size: 2rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: #555;
+}
+.swappy-radios label:hover input ~ .radio {
+  opacity: 0.8;
+}
+.swappy-radios input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.swappy-radios input:checked ~ span {
+  color: #0bae72;
+  -webkit-transition: color .5s;
+  transition: color .5s;
+}
+.swappy-radios input:checked ~ .radio {
+  background-color: #0ac07d;
+  opacity: 1 !important;
+}
+.swappy-radios input:checked ~ .radio::after {
+  opacity: 1;
+}
+.swappy-radios .radio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2.5rem;
+  width: 2.5rem;
+  background: #c9ded6;
+  border-radius: 50%;
+}
+.swappy-radios .radio::after {
+  display: block;
+  content: '';
+  position: absolute;
+  opacity: 0;
+  top: .5rem;
+  left: .5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #fff;
+}
+
+
+
 		* {
 			font-family:Roboto, Arial, sans-serif;
 		}
@@ -25,7 +113,6 @@
 		}
 		.main_block {
 			display: flex;
-			padding-left: 10%;
 			flex-direction: column;
 		}
 		.ret_block {
@@ -48,50 +135,86 @@
 <body>
 	<%- include('header') %>
 	<br>
+	
+
+
+
+	
 	<div class="main_block">
-		<div class="ret_block">
-			<div class="img_block">
-				<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4">
-					<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
-				</a>
+		<div style="display: flex; flex-direction: row;">
+			<div class="button_block">
+				<div class="swappy-radios" role="radiogroup" aria-labelledby="swappy-radios-label">
+				  <h3 id="swappy-radios-label">Search Option</h3>
+				  <br>
+				  <label>
+					<input type="radio" name="options" checked />
+					<span class="radio"></span>
+					<span>找標題</span>
+				  </label>
+				  <label>
+					<input type="radio" name="options" />
+					<span class="radio"></span>
+					<span>找作者</span>
+				  </label>
+				  <label>
+					<input type="radio" name="options" />
+					<span class="radio"></span>
+					<span>找歌詞</span>
+				  </label>
+				  <label>
+					<input type="radio" name="options" />
+					<span class="radio"></span>
+					<span>不指定</span>
+				  </label>
+				</div>
 			</div>
 
-			<div class="info_block">
-				<div>
-					<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" class="yt_link">
-						<p class="yt_des" style="font-size: 18px;">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
-					</a>
-				</div>
+			<div style="display: flex; flex-direction: column; margin-left: 2%;">
+				<div class="ret_block">
+					<div class="img_block">
+						<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4">
+							<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
+						</a>
+					</div>
 
-				<div>
-					<pi style="font-size: 13px;">I do that</p>
-				</div>
+					<div class="info_block">
+						<div>
+							<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" class="yt_link">
+								<p class="yt_des" style="font-size: 18px;">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
+							</a>
+						</div>
 
-				<div>
-					<p style="font-size: 13px;" class="yt_des">jewfhkwjhfkhwrfurhuireuhguirheguihreigirheighirehgiurheuigurehgiurehgiiiiiiiiiiiiiihguirehgirehiuvreuvguerhviuhrieuhvierihgiurehgiuhreiguhiuregurhiurehgiureewfhjkwrfhkjwhefkjhekwfhkehrwkfhwefhjwnfkjwnrbfkjenrwkfrekgferbgjkrbekjgjkrebgjkbrekgberbgejkrbgejkrbgjkerbgejkqrbgjker</p>
-				</div>
-			</div>
-		</div>
-		<div class="ret_block">
-			<div class="img_block">
-				<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4">
-					<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
-				</a>
-			</div>
+						<div>
+							<pi style="font-size: 13px;">I do that</p>
+						</div>
 
-			<div class="info_block">
-				<div>
-					<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" class="yt_link">
-						<p class="yt_des" style="font-size: 18px;">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
-					</a>
+						<div>
+							<p style="font-size: 13px;" class="yt_des">jewfhkwjhfkhwrfurhuireuhguirheguihreigirheighirehgiurheuigurehgiurehgiiiiiiiiiiiiiihguirehgirehiuvreuvguerhviuhrieuhvierihgiurehgiuhreiguhiuregurhiurehgiureewfhjkwrfhkjwhefkjhekwfhkehrwkfhwefhjwnfkjwnrbfkjenrwkfrekgferbgjkrbekjgjkrebgjkbrekgberbgejkrbgejkrbgjkerbgejkqrbgjker</p>
+						</div>
+					</div>
 				</div>
+				<div class="ret_block">
+					<div class="img_block">
+						<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4">
+							<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
+						</a>
+					</div>
 
-				<div>
-					<pi style="font-size: 13px;">I do that</p>
-				</div>
+					<div class="info_block">
+						<div>
+							<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" class="yt_link">
+								<p class="yt_des" style="font-size: 18px;">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
+							</a>
+						</div>
 
-				<div>
-					<p style="font-size: 13px;" class="yt_des">jewfhkwjhfkhwrfurhuireuhguirheguihreigirheighirehgiurheuigurehgiurehgiiiiiiiiiiiiiihguirehgirehiuvreuvguerhviuhrieuhvierihgiurehgiuhreiguhiuregurhiurehgiureewfhjkwrfhkjwhefkjhekwfhkehrwkfhwefhjwnfkjwnrbfkjenrwkfrekgferbgjkrbekjgjkrebgjkbrekgberbgejkrbgejkrbgjkerbgejkqrbgjker</p>
+						<div>
+							<pi style="font-size: 13px;">I do that</p>
+						</div>
+
+						<div>
+							<p style="font-size: 13px;" class="yt_des">jewfhkwjhfkhwrfurhuireuhguirheguihreigirheighirehgiurheuigurehgiurehgiiiiiiiiiiiiiihguirehgirehiuvreuvguerhviuhrieuhvierihgiurehgiuhreiguhiuregurhiurehgiureewfhjkwrfhkjwhefkjhekwfhkehrwkfhwefhjwnfkjwnrbfkjenrwkfrekgferbgjkrbekjgjkrebgjkbrekgberbgejkrbgejkrbgjkerbgejkqrbgjker</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
