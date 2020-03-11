@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
     <link rel="stylesheet" href="/stylesheets/header.css" />
     <script src="/javascripts/header.js"></script>
-	<script src="/javascripts/search.js"></script>
+	<script src="/javascripts/results.js"></script>
 	<style>
 		html {
   box-sizing: border-box;
@@ -168,51 +168,26 @@ h3 {
 			</div>
 
 			<div style="display: flex; flex-direction: column; margin-left: 2%;">
-				<div class="ret_block">
-					<div class="img_block">
-						<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4">
-							<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
-						</a>
-					</div>
-
-					<div class="info_block">
-						<div>
-							<a href="https://www.youtube.com/watch?v=ZOxmzpE0Vz4" title="孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video" class="yt_link">
-								<p class="yt_des" style="font-size: 18px;">孫盛希 Shi Shi【逃 Come Away】電視劇「想見你」插曲 Official Music Video</p>
-							</a>
-						</div>
-
-						<div>
-							<pi style="font-size: 13px;">I do that</p>
-						</div>
-
-						<div>
-							<p style="font-size: 13px;" class="yt_des">jewfhkwjhfkhwrfurhuireuhguirheguihreigirheighirehgiurheuigurehgiurehgiiiiiiiiiiiiiihguirehgirehiuvreuvguerhviuhrieuhvierihgiurehgiuhreiguhiuregurhiurehgiureewfhjkwrfhkjwhefkjhekwfhkehrwkfhwefhjwnfkjwnrbfkjenrwkfrekgferbgjkrbekjgjkrebgjkbrekgberbgejkrbgejkrbgjkerbgejkqrbgjker</p>
-						</div>
-					</div>
-				</div>
-
 				<% for (let s of result) { %>
 				<div class="ret_block">
 					<div class="img_block">
-						<a href="/watch?v=<%= Buffer.from(s.id.toString().padStart(6, '0')).toString('base64') -%>">
+						<a href="/watch?v=<%= Buffer.from(s._id.toString().padStart(6, '0')).toString('base64') -%>">
 							<img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
 						</a>
 					</div>
 
 					<div class="info_block">
 						<div>
-							<a href="/watch?v=<%= Buffer.from(s.id.toString().padStart(6, '0')).toString('base64') -%>" title="<%= s.singer -%> - <%= s.name -%> (<%= s.date -%>)" class="yt_link">
-								<p class="yt_des" style="font-size: 18px;"><%= s.singer -%> - <%= s.name -%> (<%= s.date -%>)</p>
+							<a href="/watch?v=<%= Buffer.from(s._id.toString().padStart(6, '0')).toString('base64') -%>" title="<%= s._source.singer -%> - <%= s._source.name -%> (<%= s._source.date -%>)" class="yt_link">
+								<p class="yt_des" style="font-size: 18px;"><%= s._source.singer -%> - <%= s._source.name -%> (<%= s._source.date -%>)</p>
 							</a>
 						</div>
-
 						<div>
-							<pi style="font-size: 13px;"><%= s.singer -%> </p>
+							<pi style="font-size: 13px;"><%= s._source.singer -%> </p>
 						</div>
-
+                        <br>
 						<div>
-							<p style="font-size: 13px;" class="yt_des">	<%= s.lyrics.join(" ") -%> </p>
+							<p style="font-size: 13px;" class="yt_des">	<%= s._source.lyrics.join(" ") -%> </p>
 						</div>
 					</div>
 				</div>

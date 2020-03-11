@@ -65,14 +65,16 @@ router.get("/watch",
    }
 );
 
-router.get("/search", ensureParam("q"), async function(req, res, next) {
-    return res.render('search', {
+router.get("/results", ensureParam("q"), async function(req, res, next) {
+    let result = await songs.search(req.query.q, limits=100);
+    return res.render('results', {
         user: req.user,
-        search: req.query.q
+        search: req.query.q,
+        result: result
     });
 });
 
-router.get("/results", async function(req, res, next) {
+router.get("/search", async function(req, res, next) {
     let result = await songs.search(req.query.q, limits=100);
     return res.render('result', {
         user: req.user,
