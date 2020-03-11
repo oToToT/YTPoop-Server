@@ -63,5 +63,8 @@ typings/
 # sqlite3 data
 *.sqlite3
 
+# Mac Data
+.DS_Store
+
 # songs data
 models/songs.json

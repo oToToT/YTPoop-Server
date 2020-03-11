@@ -76,7 +76,7 @@ router.get("/results", ensureParam("q"), async function(req, res, next) {
 
 router.get("/search", async function(req, res, next) {
     let result = await songs.search(req.query.q, limits=100);
-    return res.render('result', {
+    return res.render('search', {
         user: req.user,
         result: result,
         search: req.query.q
