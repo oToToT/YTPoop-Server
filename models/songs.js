@@ -9,7 +9,7 @@ for (let i = 0; i < songs.length; i++) {
     INDICES[i] = i;
 }
 
-async function search(query, limits=30, from=0) {
+async function searchAll(query, limits=30, from=0) {
     const result = await client.search({
         index: 'songs',
         body: {
@@ -18,14 +18,61 @@ async function search(query, limits=30, from=0) {
             query: {
                 multi_match : {
                     query: query,
-                    fields: [ "name^6", "singer^10", "lyrics^2", "*" ],
+                    fields: [ "name^6", "singer^6", "lyrics^2", "*" ],
                 }
             }
         }
     });
     return result.body.hits.hits;
 }
-
+async function searchByName(query, limits=30, from=0) {
+    const result = await client.search({
+        index: 'songs',
+        body: {
+            from: from,
+            size: limits,
+            query: {
+                multi_match : {
+                    query: query,
+                    fields: [ "name^2", "*" ],
+                }
+            }
+        }
+    });
+    return result.body.hits.hits;
+}
+async function searchBySinger(query, limits=30, from=0) {
+    const result = await client.search({
+        index: 'songs',
+        body: {
+            from: from,
+            size: limits,
+            query: {
+                multi_match : {
+                    query: query,
+                    fields: [ "singer^2", "*" ],
+                }
+            }
+        }
+    });
+    return result.body.hits.hits;
+}
+async function searchByLyrics(query, limits=30, from=0) {
+    const result = await client.search({
+        index: 'songs',
+        body: {
+            from: from,
+            size: limits,
+            query: {
+                multi_match : {
+                    query: query,
+                    fields: [ "lyrics^2", "*" ],
+                }
+            }
+        }
+    });
+    return result.body.hits.hits;
+}
 function vecdis(v1, v2) {
     if (v1.length !== v2.length) {
         throw "The lenth of two vectors should be the same.";
@@ -179,7 +226,10 @@ function randomSample(limit = 1) {
 }
 
 module.exports = {
-    search: search,
+    searchAll: searchAll,
+    searchByName: searchByName,
+    searchBySinger: searchBySinger,
+    searchByLyrics: searchByLyrics,
     getRecommend: getRecommend,
     getSongById: getSongById,
     randomSample: randomSample

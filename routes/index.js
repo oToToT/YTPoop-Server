@@ -4,9 +4,9 @@ const songs = require('../models/songs');
 const accounts = require('../models/accounts');
 const histories = require('../models/histories')
 
-function ensureParam(key) {
+function ensureParam(key, field = "query") {
     return (req, res, next)=>{
-        if (typeof req.query[key] === 'undefined') {
+        if (typeof req[field][key] === 'undefined') {
             return res.redirect("/");
         }
         return next();
@@ -66,16 +66,33 @@ router.get("/watch",
 );
 
 router.get("/results", ensureParam("q"), async function(req, res, next) {
-    let result = await songs.search(req.query.q, limits=100);
+    let result = await songs.searchAll(req.query.q, limits=100);
     return res.render('results', {
         user: req.user,
         search: req.query.q,
         result: result
     });
 });
+router.post("/results",
+    ensureParam("q", "body"),
+    ensureParam("m", "body"),
+    async function(req, res, next) {
+        let result = [];
+        if (req.body.m === "all") {
+            result = await songs.searchAll(req.body.q, limits=100);
+        } else if (req.body.m === "name") {
+            result = await songs.searchByName(req.body.q, limits=100);
+        } else if (req.body.m === "singer") {
+            result = await songs.searchBySinger(req.body.q, limits=100);
+        } else if (req.body.m === "lyrics") {
+            result = await songs.searchByLyrics(req.body.q, limits=100);
+        }
+        return res.json(result);
+    }
+);
 
 router.get("/search", async function(req, res, next) {
-    let result = await songs.search(req.query.q, limits=100);
+    let result = await songs.searchAll(req.query.q, limits=100);
     return res.render('search', {
         user: req.user,
         result: result,
