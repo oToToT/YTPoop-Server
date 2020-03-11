@@ -1,8 +1,7 @@
 const { Client } = require('@elastic/elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
-const songs = require('../models/songs.json')
-/* Should be replace with https://github.com/luciopaiva/heapify */
-const { Heapify } = require('../models/heapify');
+import songs from '../models/songs.json';
+import Heapify from 'heapify';
 
 /* initialize indices once started */
 let INDICES = new Uint32Array(songs.length);
@@ -68,12 +67,16 @@ function getRecommend(id, a, b, c, d, K = 20) {
         const dt = Math.abs(d1 - d2);
         const ds = Number(s1.singer == s2.singer);
         const dn = lcs(s1.name, s2.name);
-        return calcWeight(dv, dt, ds, dn);
+        return [dv, dt, ds, dn];
     };
+    
 
+    let bestV = [], bestT = [], bestS = [], bestN = [];
     let weights = new Float64Array(songs.length);
     for (let i = 0 ; i < songs.length; i++) {
-        weights[i] = pairWeight(songs[id], songs[i]);
+        const [dv, dt, ds, dn] = pairWeight(songs[id], songs[i]);
+        weights[i] = calcWeight(dv, dt, ds, dn);
+        if (i == id) continue;
     }
 
     let heap = new Heapify(songs.length, INDICES, weights, Uint32Array, Float64Array);
