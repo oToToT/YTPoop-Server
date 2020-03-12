@@ -167,19 +167,23 @@ function getRecommend(id, a, b, c, d, K = 20) {
     }
 
     let already = [];
-    if (Math.random() > 0.7 && rec.length < K) {
+    if (Math.random() > 0.7 && rec.length < K &&
+        !already.includes(bestV[1])) {
         addToRec(bestV[1]);
         already.push(bestV[1]);
     }
-    if (Math.random() > 0.8 && rec.length < K) {
+    if (Math.random() > 0.8 && rec.length < K &&
+        !already.includes(bestT[1])) {
         addToRec(bestT[1]);
         already.push(bestT[1]);
     }
-    if (Math.random() > 0.7 && rec.length < K) {
+    if (Math.random() > 0.7 && rec.length < K &&
+        !already.includes(bestS[1])) {
         addToRec(bestS[1]);
         already.push(bestS[1]);
     }
-    if (Math.random() > 0.7 && rec.length < K) {
+    if (Math.random() > 0.7 && rec.length < K &&
+        !already.includes(bestN[1])) {
         addToRec(bestN[1]);
         already.push(bestN[1]);
     }
