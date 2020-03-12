@@ -7,11 +7,15 @@ db.serialize(function(){
        CREATE TABLE IF NOT EXISTS "users" (
            "id" INTEGER PRIMARY KEY AUTOINCREMENT,
            "username" TEXT,
-           "password" TEXT, -- sha256 hash of the plain-text password
-           "salt" TEXT -- salt that is appended to the password before it is hashed
+           "password" TEXT,    -- sha256 hash of the plain-text password
+           "salt" TEXT,        -- salt that is appended to the password before it is hashed
+           "a" REAL DEFAULT 0, -- paramater a of recommendation
+           "b" REAL DEFAULT 0, -- paramater b of recommendation
+           "c" REAL DEFAULT 0, -- paramater c of recommendation
+           "d" REAL DEFAULT 0  -- paramater d of recommendation
        )`
     );
-    });
+});
 
 function hashPassword(password, salt) {
     let hash = crypto.createHash('sha256');

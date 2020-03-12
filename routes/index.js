@@ -2,18 +2,19 @@ const express = require('express');
 const router = express.Router();
 const songs = require('../models/songs');
 const accounts = require('../models/accounts');
-const histories = require('../models/histories')
+const histories = require('../models/histories');
+const qs = require('querystring');
 
-function ensureParam(key, field = "query") {
+function ensureParam(key, field = 'query') {
     return (req, res, next)=>{
-        if (typeof req[field][key] === 'undefined') {
-            return res.redirect("/");
+        if (typeof req[field][key] === 'undefined' || req[field][key] === '') {
+            return res.redirect(req.headers['referer'] || '/');
         }
         return next();
     };
 }
 
-router.get("/", function(req, res, next) {
+router.get('/', function(req, res, next) {
     return res.render('index', {
         user: req.user,
         songs: songs.randomSample(50)
@@ -27,25 +28,25 @@ function extractVid(param) {
             id = Buffer.from(req.query[param], 'base64').toString('ascii');
             id = Number(id);
             if (isNaN(id)) {
-                throw "Bad id.";
+                throw 'Bad id.';
             }    
         } catch(e) {
-            return res.redirect('/');
+            return res.redirect(req.headers['referer'] || '/');
         }
         req.sid = id;
         return next();
     }
 }
 
-router.get("/watch",
-    ensureParam("v"),
-    extractVid("v"),
+router.get('/watch',
+    ensureParam('v'),
+    extractVid('v'),
     function(req, res, next) {
         let song = null;
         try {
             song = songs.getSongById(req.sid);
         } catch(e) {
-            return res.redirect("/");
+            return res.redirect('/');
         }
         const renderPage = ()=>{
             return res.render('watch', {
@@ -54,7 +55,18 @@ router.get("/watch",
                 recommend: songs.getRecommend(req.sid, 11.97777, 8.333333333333333e-9, -2, -3, 20)
             });
         }
+        // this may have race condition problem
         if (req.user) {
+            if (req.headers['referer']) {
+                let u = new URL(req.headers['referer']);
+                if (u.search) {
+                    let que = qs.parse(u.search.slice(1));
+                    if (que['v']) {
+
+                    }
+                }
+            }
+
             histories.save(req.user.id, req.sid, (lastID, msg)=>{
                 if (lastID === false) throw msg;
                 renderPage();
