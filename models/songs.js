@@ -18,7 +18,7 @@ async function searchAll(query, limits=30, from=0) {
             query: {
                 multi_match : {
                     query: query,
-                    fields: [ "name^6", "singer^6", "lyrics^2", "*" ],
+                    fields: [ "name^6", "singer^6", "lyrics^2", "date^8" ],
                 }
             }
         }

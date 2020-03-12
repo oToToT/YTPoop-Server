@@ -46,7 +46,7 @@
                     <div class="ret_block">
                         <div class="img_block">
                             <a href="/watch?v=<%= Buffer.from(s._id.toString().padStart(6, '0')).toString('base64') -%>">
-                                <img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
+                                <img src="https://img.youtube.com/vi/<%= s._source.youtube_id.slice(9) -%>/0.jpg" style="width: 100%;">
                             </a>
                         </div>
 

@@ -13,7 +13,7 @@
         <%- include('header') %>
         <div id="main">
             <div id="yt_view">
-                <iframe src="https://www.youtube.com/embed/?autoplay=1&loop=1&rel=0&listType=search&list=<%= encodeURIComponent(song.singer+' '+song.name) -%>" allow="fullscreen"></iframe>
+                <iframe src="https://www.youtube.com/embed/<%= song.youtube_id.slice(9) -%>?autoplay=1&loop=1&rel=0" allow="fullscreen"></iframe>
                 <div id="title"><%= song.singer -%> - <%= song.name -%></div>
                 <div id="date"><%= song.date -%></div>
                 <pre id="lyrics"><%= song.lyrics.join('\n') -%></pre>
@@ -23,9 +23,7 @@
                 <div class="recommend">
                     <div>
                         <a class="yt_link" href="/watch?v=<%= Buffer.from(r.id.toString().padStart(6, '0')).toString('base64') -%>" title="<%= r.singer -%> - <%= r.name -%>">
-                            <!--<img class="thumbnail" src="https://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg"/>-->
-                            <div class="thumbnail" style="position: absolute;"></div>
-                            <iframe class="thumbnail" src="https://www.youtube.com/embed/?autoplay=1&loop=1&rel=0&listType=search&list=<%= encodeURIComponent(r.singer+' '+r.name) -%>"></iframe>
+                            <img class="thumbnail" src="https://img.youtube.com/vi/<%= r.youtube_id.slice(9) -%>/0.jpg"/>
                         </a>
                     </div>
                     <div class="sideinfo">

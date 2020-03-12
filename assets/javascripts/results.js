@@ -146,7 +146,7 @@ window.addEventListener("load", function() {
 <div class="ret_block">
     <div class="img_block">
         <a href="/watch?v=${btoa(s._id.padStart(6, "0"))}">
-            <img src="http://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg" style="width: 100%;">
+            <img src="https://img.youtube.com/vi/${s._source.youtube_id.slice(9)}/0.jpg" style="width: 100%;">
         </a>
     </div>
     <div class="info_block">

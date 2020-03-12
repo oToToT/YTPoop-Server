@@ -15,9 +15,7 @@
             <% for (let s of songs) { %>
             <div class="yt_box">
                 <a href="/watch?v=<%= Buffer.from(s.id.toString().padStart(6, '0')).toString('base64') -%>" class="yt_link">
-                    <!--<img class="thumbnail" src="https://img.youtube.com/vi/ZOxmzpE0Vz4/0.jpg"/>-->
-                    <iframe class="thumbnail" src="https://www.youtube.com/embed/?autoplay=1&loop=1&rel=0&listType=search&list=<%= encodeURIComponent(s.singer+' '+s.name) -%>" style="pointer-events: none;"></iframe>
-
+                    <img class="thumbnail" src="https://img.youtube.com/vi/<%= s.youtube_id.slice(9) -%>/0.jpg"/>
                     <p class="title" title="<%= s.singer -%> - <%= s.name -%> (<%= s.date -%>)"><%= s.singer -%> - <%= s.name -%> (<%= s.date -%>)</p>
                 </a>
             </div>
