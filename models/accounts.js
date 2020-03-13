@@ -37,7 +37,7 @@ function validate(username, password, cb) {
 
 function findUserById(id, cb) {
     db.get('SELECT id, username FROM users WHERE id = ?', id, function(err, row) {
-        if (!row) return cb(false);
+        if (!row) return cb(false, err);
         return cb(row);
     });
 }
@@ -57,8 +57,25 @@ function register(username, password, cb) {
     });
 }
 
+function getParam(id, cb) {
+    db.get('SELECT a, b, c, d FROM users WHERE id = ?', id, function(err, row) {
+        if (!row) return cb(false, err);
+        return cb(row);
+    });
+}
+
+function updateParam(id, a, b, c, d, cb) {
+    db.get('UPDATE users SET a = ?, b = ?, c = ?, d = ? WHERE id = ?',
+           a, b, c, d, id, function(err) {
+        if (err) return cb(false, err);
+        return cb(this.changes);
+    });
+}
+
 module.exports = {
     validate: validate,
     findUserById: findUserById,
-    register: register
+    register: register,
+    getParam: getParam,
+    updateParam: updateParam
 }

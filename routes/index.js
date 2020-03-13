@@ -48,31 +48,57 @@ router.get('/watch',
         } catch(e) {
             return res.redirect('/');
         }
-        const renderPage = ()=>{
+        const renderPage = (a, b, c, d)=>{
             return res.render('watch', {
                 user: req.user,
                 song: song,
-                recommend: songs.getRecommend(req.sid, 11.97777, 8.333333333333333e-9, -2, -3, 20)
+                recommend: songs.getRecommend(req.sid, 11.97777+a, 8.333333333333333e-9+b, -2+c, -3+d, 20)
             });
         }
         // this may have race condition problem
-        if (req.user) {
-            if (req.headers['referer']) {
-                let u = new URL(req.headers['referer']);
-                if (u.search) {
-                    let que = qs.parse(u.search.slice(1));
-                    if (que['v']) {
-
-                    }
+        const updWeight = (cb)=>{
+            accounts.getParam(req.user.id, (row, msg)=>{
+                if (row === false) throw msg;
+                if (!req.headers['referer']) {
+                    return cb(row.a, row.b, row.c, row.d);
                 }
-            }
-
-            histories.save(req.user.id, req.sid, (lastID, msg)=>{
-                if (lastID === false) throw msg;
-                renderPage();
+                let u = new URL(req.headers['referer']);
+                // should check host carefully
+                if (!u.search) {
+                    return cb(row.a, row.b, row.c, row.d);
+                }
+                let que = qs.parse(u.search.slice(1));
+                if (!que['v']) {
+                    return cb(row.a, row.b, row.c, row.d);
+                }
+                let id = Number(Buffer.from(que['v'], 'base64').toString('ascii'));
+                let s1 = songs.getSongById(id);
+                let [a, b, c, d] = songs.pairWeight(song, s1);
+                a *= -1e-3 + 1e-4;
+                b *= -1e-12 + 1e-4;
+                c *= -1e-1;
+                d *= -1e-2;
+                //a=0,b=0,c=0,d=0;
+                a += row.a;
+                b += row.b;
+                c += row.c;
+                d += row.d;
+                accounts.updateParam(req.user.id, a, b, c, d, (changes, m)=>{
+                    if (changes === false) throw m;
+                    return cb(a, b, c, d);
+                });
+            });
+        };
+        if (req.user) {
+            updWeight((a, b, c, d)=>{
+                histories.save(req.user.id, req.sid, (lastID, msg)=>{
+                    if (lastID === false) throw msg;
+                    console.log(a, b, c, d);
+                    renderPage(a, b, c, d);
+                });
             });
         } else {
-            renderPage();
+            renderPage(0, 0, 0, 0);
         }
    }
 );

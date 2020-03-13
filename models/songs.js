@@ -103,20 +103,20 @@ function lcs(s1, s2) {
     return ans;
 }
 
+function pairWeight(s1, s2) {
+    const dv = vecdis(s1.vecvalue, s2.vecvalue)
+    const d1 = new Date(s1.date);
+    const d2 = new Date(s2.date);
+    const dt = Math.abs(d1 - d2);
+    const ds = Number(s1.singer == s2.singer);
+    const dn = lcs(s1.name, s2.name);
+    return [dv, dt, ds, dn];
+};
+
 function getRecommend(id, a, b, c, d, K = 20) {
     const calcWeight = (dv, dt, ds, dn)=>{
         return Math.exp(dv * a) + b*dt + c*ds + d*dn;
     };
-    const pairWeight = (s1, s2)=>{
-        const dv = vecdis(s1.vecvalue, s2.vecvalue)
-        const d1 = new Date(s1.date);
-        const d2 = new Date(s2.date);
-        const dt = Math.abs(d1 - d2);
-        const ds = Number(s1.singer == s2.singer);
-        const dn = lcs(s1.name, s2.name);
-        return [dv, dt, ds, dn];
-    };
-    
 
     let bestV = [], bestT = [], bestS = [], bestN = [];
     let weights = new Float64Array(songs.length);
@@ -236,5 +236,6 @@ module.exports = {
     searchByLyrics: searchByLyrics,
     getRecommend: getRecommend,
     getSongById: getSongById,
-    randomSample: randomSample
+    randomSample: randomSample,
+    pairWeight: pairWeight
 };
