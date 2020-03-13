@@ -52,7 +52,7 @@ router.get('/watch',
             return res.render('watch', {
                 user: req.user,
                 song: song,
-                recommend: songs.getRecommend(req.sid, 11.97777+a, 8.333333333333333e-9+b, -2+c, -3+d, 20)
+                recommend: songs.getRecommend(req.sid, 8.97777+a, 8.333333333333333e-10+b, -200+c, -3+d, 20)
             });
         }
         // this may have race condition problem
@@ -74,10 +74,10 @@ router.get('/watch',
                 let id = Number(Buffer.from(que['v'], 'base64').toString('ascii'));
                 let s1 = songs.getSongById(id);
                 let [a, b, c, d] = songs.pairWeight(song, s1);
-                a *= -1e-3 + 1e-4;
-                b *= -1e-12 + 1e-4;
-                c *= -1e-1;
-                d *= -1e-2;
+                a *= -5e-3;
+                b *= -1e-13;
+                c *= -5e1;
+                d *= -1e-5;
                 //a=0,b=0,c=0,d=0;
                 a += row.a;
                 b += row.b;
