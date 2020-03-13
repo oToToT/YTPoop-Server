@@ -34,7 +34,7 @@ async function searchByName(query, limits=30, from=0) {
             query: {
                 multi_match : {
                     query: query,
-                    fields: [ "name^2", "*" ],
+                    fields: [ "name^10", "*" ],
                 }
             }
         }
@@ -50,7 +50,7 @@ async function searchBySinger(query, limits=30, from=0) {
             query: {
                 multi_match : {
                     query: query,
-                    fields: [ "singer^2", "*" ],
+                    fields: [ "singer^10", "*" ],
                 }
             }
         }
@@ -66,7 +66,7 @@ async function searchByLyrics(query, limits=30, from=0) {
             query: {
                 multi_match : {
                     query: query,
-                    fields: [ "lyrics^2", "*" ],
+                    fields: [ "lyrics^10", "*" ],
                 }
             }
         }
