@@ -84,23 +84,37 @@ function vecdis(v1, v2) {
     return Math.sqrt(s);
 }
 
-function lcs(s1, s2) {
-    const N = s1.length, M = s2.length;
-    let dp = [new Uint32Array(M + 1), new Uint32Array(M + 1)];
-    let me = 0, he = 1, ans = 0;
-    for (let i = 1; i <= N; ++i) {
-        [me, he] = [he, me];
-        dp[me].fill(0);
-        for (let j = 1; j <= M; ++j) {
-            if (s1[i - 1] == s2[j - 1]) {
-                dp[me][j] = dp[he][j - 1] + 1;
-            } else {
-                dp[me][j] = Math.max(dp[he][j], dp[me][j - 1]);
-            }
-            ans = Math.max(ans, dp[me][j]);
+function textDis(s1, s2) {
+    let v1 = [], v2 = [];
+    for (let i = 0; i + 1 < s1.length; ++i) {
+        v1.push(s1.slice(i, i + 1));
+    }
+    for (let i = 0; i + 2 < s1.length; ++i) {
+        v1.push(s1.slice(i, i + 2));
+    }
+    for (let i = 0; i + 1 < s2.length; ++i) {
+        v2.push(s2.slice(i, i + 1));
+    }
+    for (let i = 0; i + 2 < s2.length; ++i) {
+        v2.push(s2.slice(i, i + 2));
+    }
+    let union = [], inter = [];
+    for (let v of v1) {
+        if (!union.includes(v)) {
+            union.push(v);
         }
     }
-    return ans;
+    for (let v of v2) {
+        if (!union.includes(v)) {
+            union.push(v);
+        }
+    }
+    for (let v of v1) {
+        if (!inter.includes(v) && v2.includes(v)) {
+            inter.push(v);
+        }
+    }
+    return inter.length / union.length;
 }
 
 function pairWeight(s1, s2) {
@@ -109,13 +123,13 @@ function pairWeight(s1, s2) {
     const d2 = new Date(s2.date);
     const dt = Math.abs(d1 - d2);
     const ds = Number(s1.singer == s2.singer);
-    const dn = lcs(s1.name, s2.name);
+    const dn = textDis(s1.name, s2.name);
     return [dv, dt, ds, dn];
 };
 
 function getRecommend(id, a, b, c, d, K = 20) {
     const calcWeight = (dv, dt, ds, dn)=>{
-        return Math.exp(dv * a) + b*dt + c*ds + d*dn;
+        return Math.exp(dv * a) + Math.exp(b*dt) + c*ds + d*dn;
     };
 
     let bestV = [], bestT = [], bestS = [], bestN = [];
@@ -162,7 +176,7 @@ function getRecommend(id, a, b, c, d, K = 20) {
         s.a = vecdis(songs[i].vecvalue, songs[id].vecvalue);
         s.b = Math.abs((new Date(songs[i].date)) - (new Date(songs[id].date)));
         s.c = Number(songs[i].singer == songs[id].singer);
-        s.d = lcs(songs[i].name, songs[id].name);
+        s.d = textDis(songs[i].name, songs[id].name);
         rec.push(s);
     }
 
