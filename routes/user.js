@@ -41,7 +41,7 @@ router.get('/history', function(req, res, next) {
             result: rows.map(row=>Object.assign(row, songs.getSongById(row.sid)))
         });
     });
-})
+});
 
 router.post('/login', preventMultipleLogin, passport.authenticate('local', {
     failureRedirect: '/user/login',

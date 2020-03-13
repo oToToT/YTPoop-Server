@@ -57,32 +57,27 @@ router.get('/watch',
         }
         // this may have race condition problem
         const updWeight = (cb)=>{
-            accounts.getParam(req.user.id, (row, msg)=>{
-                if (row === false) throw msg;
-                if (!req.headers['referer']) {
-                    return cb(row.a, row.b, row.c, row.d);
-                }
-                let u = new URL(req.headers['referer']);
+            histories.get(req.user.id, (rows, msg)=>{
+                if (rows === false) throw msg;
                 // should check host carefully
-                if (!u.search) {
-                    return cb(row.a, row.b, row.c, row.d);
+                let [a, b, c, d] = [0, 0, 0, 0];
+                let hist = rows.slice(-20);
+                for (let i = hist.length - 1; i >= 0; --i) {
+                    for (let j = hist.length - 1; j >= i; --j) {
+                        let [da, db, dc, dd] = songs.pairWeight(
+                            songs.getSongById(hist[i].sid),
+                            songs.getSongById(hist[j].sid)
+                        );
+                        da *= -5e-3 * Math.pow(0.9, j - i);
+                        db *= -1e-13 * Math.pow(0.9, j - i);
+                        dc *= -5e-1 * Math.pow(0.9, j - i);
+                        dd *= -1e-5 * Math.pow(0.9, j - i);
+                        a += da;
+                        b += db;
+                        c += dc;
+                        d += dd;
+                    }
                 }
-                let que = qs.parse(u.search.slice(1));
-                if (!que['v']) {
-                    return cb(row.a, row.b, row.c, row.d);
-                }
-                let id = Number(Buffer.from(que['v'], 'base64').toString('ascii'));
-                let s1 = songs.getSongById(id);
-                let [a, b, c, d] = songs.pairWeight(song, s1);
-                a *= -5e-3;
-                b *= -1e-13;
-                c *= -5e1;
-                d *= -1e-5;
-                //a=0,b=0,c=0,d=0;
-                a += row.a;
-                b += row.b;
-                c += row.c;
-                d += row.d;
                 accounts.updateParam(req.user.id, a, b, c, d, (changes, m)=>{
                     if (changes === false) throw m;
                     return cb(a, b, c, d);
@@ -90,9 +85,9 @@ router.get('/watch',
             });
         };
         if (req.user) {
-            updWeight((a, b, c, d)=>{
-                histories.save(req.user.id, req.sid, (lastID, msg)=>{
-                    if (lastID === false) throw msg;
+            histories.save(req.user.id, req.sid, (lastID, msg)=>{
+                if (lastID === false) throw msg;
+                updWeight((a, b, c, d)=>{
                     console.log(a, b, c, d);
                     renderPage(a, b, c, d);
                 });
@@ -103,7 +98,7 @@ router.get('/watch',
    }
 );
 
-router.get("/results", ensureParam("q"), async function(req, res, next) {
+router.get('/results', ensureParam('q'), async function(req, res, next) {
     let result = await songs.searchAll(req.query.q, limits=100);
     return res.render('results', {
         user: req.user,
@@ -111,9 +106,9 @@ router.get("/results", ensureParam("q"), async function(req, res, next) {
         result: result
     });
 });
-router.post("/results",
-    ensureParam("q", "body"),
-    ensureParam("m", "body"),
+router.post('/results',
+    ensureParam('q', 'body'),
+    ensureParam('m', 'body'),
     async function(req, res, next) {
         let result = [];
         if (req.body.m === "all") {
