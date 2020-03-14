@@ -49,6 +49,7 @@ router.get('/watch',
             return res.redirect('/');
         }
         const renderPage = (a, b, c, d)=>{
+            console.log(8.97777+a, 8.333333333333333e-10+b, -200+c, -3+d);
             return res.render('watch', {
                 user: req.user,
                 song: song,
