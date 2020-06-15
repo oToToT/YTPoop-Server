@@ -22,6 +22,7 @@
         "heapify": "^0.2.1",
         "http-errors": "~1.6.3",
         "morgan": "~1.9.1",
+        "n": "^6.5.1",
         "passport": "^0.4.1",
         "passport-local": "^1.0.0",
         "req-flash": "0.0.3",
